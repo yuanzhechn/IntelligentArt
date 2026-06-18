@@ -53,6 +53,11 @@ def draw():
     fill(255, 120, 220)
     rect(width / 2 + 85, height * 0.75 - treble * 160, 35, treble * 160)
 
+    # 给圆点加外圈，表现声音扩散感
+    noStroke()
+    fill(120 + volume * 100, 180 + volume * 50, 255, 60)
+    circle(width / 2, y, r * 2.2)
+
     # 让圆点颜色跟随总音量变化
     noStroke()
     fill(120 + volume * 135, 180 + volume * 60, 255)
