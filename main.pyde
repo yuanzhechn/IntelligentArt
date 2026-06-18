@@ -10,7 +10,7 @@ def setup():
     smooth()
 
     # 读取音乐分析后的数据文件
-    # 第二阶段开始读取每一行的前4列：总音量、低频、中频、高频
+    # 读取每一行的前4列：总音量、低频、中频、高频
     rows = loadStrings("music_features.csv")
     for row in rows:
         parts = row.split(",")
@@ -19,8 +19,8 @@ def setup():
 
 
 def draw():
-    # 每一帧清空背景
-    background(20)
+    # 深蓝黑
+    background(8, 12, 30)
 
     # 根据当前帧数，从列表中取出对应的数据
     if len(features) == 0:
@@ -53,7 +53,7 @@ def draw():
     fill(255, 120, 220)
     rect(width / 2 + 85, height * 0.75 - treble * 160, 35, treble * 160)
 
-    # 画出代表当前音量的圆点
+    # 让圆点颜色跟随总音量变化
     noStroke()
-    fill(255)
+    fill(120 + volume * 135, 180 + volume * 60, 255)
     circle(width / 2, y, r)
