@@ -51,12 +51,15 @@ def draw():
 
     # 画三个简单柱子，分别表示低频、中频、高频
     noStroke()
-    fill(180, 80, 255)
-    rect(width / 2 - 120, height * 0.75 - bass * 160, 35, bass * 160)
-    fill(120, 180, 255)
-    rect(width / 2 - 18, height * 0.75 - mid * 160, 35, mid * 160)
-    fill(255, 120, 220)
-    rect(width / 2 + 85, height * 0.75 - treble * 160, 35, treble * 160)
+    fill(60, 140, 255)
+    rect(width / 2 - 150, height * 0.75 - bass * 120, 26, bass * 120)
+    rect(width / 2 - 115, height * 0.75 - bass * 160, 26, bass * 160)
+    fill(80, 230, 220)
+    rect(width / 2 - 32, height * 0.75 - mid * 120, 26, mid * 120)
+    rect(width / 2 + 3, height * 0.75 - mid * 160, 26, mid * 160)
+    fill(255, 90, 210)
+    rect(width / 2 + 85, height * 0.75 - treble * 120, 26, treble * 120)
+    rect(width / 2 + 120, height * 0.75 - treble * 160, 26, treble * 160)
 
     # 给圆点加外圈，表现声音扩散感
     noStroke()
