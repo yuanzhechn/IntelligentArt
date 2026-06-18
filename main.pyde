@@ -39,10 +39,15 @@ def draw():
     y = map(volume, 0, 1, height * 0.75, height * 0.25)
     r = 12 + volume * 50
 
-    # 画一条竖线，表示音量变化的方向
-    stroke(120, 220, 255)
-    strokeWeight(3)
+    # 让辅助竖线颜色变淡，避免抢主体
+    stroke(90, 150, 190, 90)
+    strokeWeight(2)
     line(width / 2, height * 0.75, width / 2, y)
+
+    # 给三个柱子加一条统一底线
+    stroke(100, 180, 220, 120)
+    strokeWeight(2)
+    line(width / 2 - 145, height * 0.75, width / 2 + 145, height * 0.75)
 
     # 画三个简单柱子，分别表示低频、中频、高频
     noStroke()
