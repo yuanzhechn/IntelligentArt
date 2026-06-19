@@ -53,8 +53,10 @@ def draw():
     stroke(120, 220, 255, 130)
     strokeWeight(2)
     beginShape()
+    waveAmp = 12 + volume * 85
+    waveDetail = 0.025 + treble * 0.04
     for x in range(0, width, 12):
-        waveY = height * 0.18 + sin(x * 0.035 + frameCount * 0.12) * volume * 70
+        waveY = height * 0.18 + sin(x * waveDetail + frameCount * 0.12) * waveAmp
         vertex(x, waveY)
     endShape()
 
