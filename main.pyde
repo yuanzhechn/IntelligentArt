@@ -38,6 +38,25 @@ def draw():
     # 音量越大，圆点越靠上，圆点也越大
     y = map(volume, 0, 1, height * 0.75, height * 0.25)
     r = 12 + volume * 50
+    bassWave1 = 0.85 + sin(frameCount * 0.08) * 0.15
+    bassWave2 = 0.85 + sin(frameCount * 0.10 + 1) * 0.15
+    bassWave3 = 0.85 + sin(frameCount * 0.12 + 2) * 0.15
+    midWave1 = 0.85 + sin(frameCount * 0.09 + 3) * 0.15
+    midWave2 = 0.85 + sin(frameCount * 0.11 + 4) * 0.15
+    midWave3 = 0.85 + sin(frameCount * 0.13 + 5) * 0.15
+    trebleWave1 = 0.85 + sin(frameCount * 0.14 + 6) * 0.15
+    trebleWave2 = 0.85 + sin(frameCount * 0.16 + 7) * 0.15
+    trebleWave3 = 0.85 + sin(frameCount * 0.18 + 8) * 0.15
+
+    # 加一条上方波形线，表现声音连续流动
+    noFill()
+    stroke(120, 220, 255, 130)
+    strokeWeight(2)
+    beginShape()
+    for x in range(0, width, 12):
+        waveY = height * 0.18 + sin(x * 0.035 + frameCount * 0.12) * volume * 70
+        vertex(x, waveY)
+    endShape()
 
     # 让辅助竖线颜色变淡，避免抢主体
     stroke(90, 150, 190, 90)
@@ -52,14 +71,17 @@ def draw():
     # 画三个简单柱子，分别表示低频、中频、高频
     noStroke()
     fill(60, 140, 255)
-    rect(width / 2 - 150, height * 0.75 - bass * 120, 26, bass * 120)
-    rect(width / 2 - 115, height * 0.75 - bass * 160, 26, bass * 160)
+    rect(width / 2 - 165, height * 0.75 - bass * 100 * bassWave1, 22, bass * 100 * bassWave1)
+    rect(width / 2 - 135, height * 0.75 - bass * 140 * bassWave2, 22, bass * 140 * bassWave2)
+    rect(width / 2 - 105, height * 0.75 - bass * 170 * bassWave3, 22, bass * 170 * bassWave3)
     fill(80, 230, 220)
-    rect(width / 2 - 32, height * 0.75 - mid * 120, 26, mid * 120)
-    rect(width / 2 + 3, height * 0.75 - mid * 160, 26, mid * 160)
+    rect(width / 2 - 45, height * 0.75 - mid * 100 * midWave1, 22, mid * 100 * midWave1)
+    rect(width / 2 - 15, height * 0.75 - mid * 140 * midWave2, 22, mid * 140 * midWave2)
+    rect(width / 2 + 15, height * 0.75 - mid * 170 * midWave3, 22, mid * 170 * midWave3)
     fill(255, 90, 210)
-    rect(width / 2 + 85, height * 0.75 - treble * 120, 26, treble * 120)
-    rect(width / 2 + 120, height * 0.75 - treble * 160, 26, treble * 160)
+    rect(width / 2 + 75, height * 0.75 - treble * 100 * trebleWave1, 22, treble * 100 * trebleWave1)
+    rect(width / 2 + 105, height * 0.75 - treble * 140 * trebleWave2, 22, treble * 140 * trebleWave2)
+    rect(width / 2 + 135, height * 0.75 - treble * 170 * trebleWave3, 22, treble * 170 * trebleWave3)
 
     # 给圆点加外圈，表现声音扩散感
     noStroke()
