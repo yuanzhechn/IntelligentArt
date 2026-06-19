@@ -8,6 +8,7 @@ def setup():
     size(960, 640)
     frameRate(30)
     smooth()
+    background(8, 12, 30)
 
     # 读取音乐分析后的数据文件
     # 读取每一行的前4列：总音量、低频、中频、高频
@@ -20,7 +21,9 @@ def setup():
 
 def draw():
     # 深蓝黑
-    background(8, 12, 30)
+    noStroke()
+    fill(8, 12, 30, 45)
+    rect(0, 0, width, height)
 
     # 根据当前帧数，从列表中取出对应的数据
     if len(features) == 0:
