@@ -71,31 +71,32 @@ def draw():
     # 给三个柱子加一条统一底线
     stroke(100, 180, 220, 120)
     strokeWeight(2)
-    line(width / 2 - 145, height * 0.75, width / 2 + 145, height * 0.75)
+    stageY = height * 0.82
+    line(width / 2 - 145, stageY, width / 2 + 145, stageY)
 
     # 加入透视地面横线，增强空间感
     stroke(60, 120, 160, 70)
     strokeWeight(1)
     for i in range(5):
-        floorY = height * 0.75 + i * 26
+        floorY = stageY + i * 22
         line(width / 2 - 190 - i * 35, floorY, width / 2 + 190 + i * 35, floorY)
 
     # 加入透视地面斜线，让柱子像站在舞台上
     for i in range(7):
         floorX = width / 2 - 210 + i * 70
-        line(width / 2, height * 0.75, floorX, height)
+        line(width / 2, stageY, floorX, height)
 
     # 把频谱柱改成立体柱：正面、右侧面和顶面
     noStroke()
-    drawColumn(width / 2 - 165, height * 0.75, 22, bass * 100 * bassWave1, 60, 140, 255)
-    drawColumn(width / 2 - 135, height * 0.75, 22, bass * 140 * bassWave2, 60, 140, 255)
-    drawColumn(width / 2 - 105, height * 0.75, 22, bass * 170 * bassWave3, 60, 140, 255)
-    drawColumn(width / 2 - 45, height * 0.75, 22, mid * 100 * midWave1, 80, 230, 220)
-    drawColumn(width / 2 - 15, height * 0.75, 22, mid * 140 * midWave2, 80, 230, 220)
-    drawColumn(width / 2 + 15, height * 0.75, 22, mid * 170 * midWave3, 80, 230, 220)
-    drawColumn(width / 2 + 75, height * 0.75, 22, treble * 100 * trebleWave1, 255, 90, 210)
-    drawColumn(width / 2 + 105, height * 0.75, 22, treble * 140 * trebleWave2, 255, 90, 210)
-    drawColumn(width / 2 + 135, height * 0.75, 22, treble * 170 * trebleWave3, 255, 90, 210)
+    drawColumn(width / 2 - 165, stageY, 22, bass * 100 * bassWave1, 60, 140, 255)
+    drawColumn(width / 2 - 135, stageY, 22, bass * 140 * bassWave2, 60, 140, 255)
+    drawColumn(width / 2 - 105, stageY, 22, bass * 170 * bassWave3, 60, 140, 255)
+    drawColumn(width / 2 - 45, stageY, 22, mid * 100 * midWave1, 80, 230, 220)
+    drawColumn(width / 2 - 15, stageY, 22, mid * 140 * midWave2, 80, 230, 220)
+    drawColumn(width / 2 + 15, stageY, 22, mid * 170 * midWave3, 80, 230, 220)
+    drawColumn(width / 2 + 75, stageY, 22, treble * 100 * trebleWave1, 255, 90, 210)
+    drawColumn(width / 2 + 105, stageY, 22, treble * 140 * trebleWave2, 255, 90, 210)
+    drawColumn(width / 2 + 135, stageY, 22, treble * 170 * trebleWave3, 255, 90, 210)
 
     # 给圆点加外圈，表现声音扩散感
     noStroke()
