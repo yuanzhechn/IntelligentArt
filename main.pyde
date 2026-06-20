@@ -68,6 +68,10 @@ def draw():
     strokeWeight(2)
     line(width / 2, height * 0.75, width / 2, y)
 
+    # 加入中心晶体，中频越强晶体越大
+    crystalSize = 45 + mid * 80
+    drawCrystal(width / 2, height * 0.45, crystalSize)
+
     # 给三个柱子加一条统一底线
     stroke(100, 180, 220, 120)
     strokeWeight(2)
@@ -123,3 +127,19 @@ def drawColumn(x, baseY, w, h, r, g, b):
     # 顶面
     fill(min(r * 1.35, 255), min(g * 1.35, 255), min(b * 1.35, 255))
     quad(x, topY, x + w, topY, x + w + d, topY - d, x + d, topY - d)
+
+
+def drawCrystal(x, y, s):
+    noStroke()
+
+    # 中心菱形
+    fill(120, 210, 255, 180)
+    quad(x, y - s, x + s * 0.7, y, x, y + s, x - s * 0.7, y)
+
+    # 左侧暗面
+    fill(55, 110, 170, 150)
+    quad(x, y - s, x, y + s, x - s * 0.7, y, x - s * 0.25, y)
+
+    # 右侧暗面
+    fill(80, 150, 220, 140)
+    quad(x, y - s, x + s * 0.7, y, x, y + s, x + s * 0.25, y)
