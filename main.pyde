@@ -1,9 +1,10 @@
 # 保存从 music_features.csv 中读取到的音乐数据
 features = []
+stars = []
 
 
 def setup():
-    global features
+    global features, stars
     # 设置画布大小和帧率
     size(960, 640)
     frameRate(30)
@@ -18,12 +19,20 @@ def setup():
         if len(parts) >= 4:
             features.append([float(parts[0]), float(parts[1]), float(parts[2]), float(parts[3])])
 
+    # 加入少量星尘，作为星河背景
+    stars = []
+    for i in range(45):
+        stars.append([random(width), random(height), random(1, 3)])
+
 
 def draw():
     # 深蓝黑
     noStroke()
     fill(8, 12, 30, 45)
     rect(0, 0, width, height)
+
+    # 让星尘缓慢下落
+    drawStars()
 
     # 根据当前帧数，从列表中取出对应的数据
     if len(features) == 0:
@@ -127,6 +136,18 @@ def drawColumn(x, baseY, w, h, r, g, b):
     # 顶面
     fill(min(r * 1.35, 255), min(g * 1.35, 255), min(b * 1.35, 255))
     quad(x, topY, x + w, topY, x + w + d, topY - d, x + d, topY - d)
+
+
+def drawStars():
+    global stars
+    noStroke()
+    fill(180, 220, 255, 80)
+    for star in stars:
+        star[1] += 0.35
+        if star[1] > height:
+            star[0] = random(width)
+            star[1] = 0
+        circle(star[0], star[1], star[2])
 
 
 def drawCrystal(x, y, s, treble):
