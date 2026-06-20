@@ -132,7 +132,16 @@ def drawColumn(x, baseY, w, h, r, g, b):
 def drawCrystal(x, y, s):
     noStroke()
 
+    # 给晶体加光环，形成声光核心
+    noFill()
+    stroke(120, 220, 255, 90)
+    strokeWeight(2)
+    ellipse(x, y, s * 2.4, s * 0.9)
+    stroke(255, 120, 220, 70)
+    ellipse(x, y, s * 1.8, s * 0.6)
+
     # 中心菱形
+    noStroke()
     fill(120, 210, 255, 180)
     quad(x, y - s, x + s * 0.7, y, x, y + s, x - s * 0.7, y)
 
