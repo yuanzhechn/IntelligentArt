@@ -8,6 +8,7 @@ def setup():
     size(960, 640)
     frameRate(30)
     smooth()
+    background(8, 12, 30)
 
     # 读取音乐分析后的数据文件
     # 读取每一行的前4列：总音量、低频、中频、高频
@@ -20,7 +21,9 @@ def setup():
 
 def draw():
     # 深蓝黑
-    background(8, 12, 30)
+    noStroke()
+    fill(8, 12, 30, 45)
+    rect(0, 0, width, height)
 
     # 根据当前帧数，从列表中取出对应的数据
     if len(features) == 0:
@@ -38,22 +41,72 @@ def draw():
     # 音量越大，圆点越靠上，圆点也越大
     y = map(volume, 0, 1, height * 0.75, height * 0.25)
     r = 12 + volume * 50
+    bassWave1 = 0.85 + sin(frameCount * 0.08) * 0.15
+    bassWave2 = 0.85 + sin(frameCount * 0.10 + 1) * 0.15
+    bassWave3 = 0.85 + sin(frameCount * 0.12 + 2) * 0.15
+    midWave1 = 0.85 + sin(frameCount * 0.09 + 3) * 0.15
+    midWave2 = 0.85 + sin(frameCount * 0.11 + 4) * 0.15
+    midWave3 = 0.85 + sin(frameCount * 0.13 + 5) * 0.15
+    trebleWave1 = 0.85 + sin(frameCount * 0.14 + 6) * 0.15
+    trebleWave2 = 0.85 + sin(frameCount * 0.16 + 7) * 0.15
+    trebleWave3 = 0.85 + sin(frameCount * 0.18 + 8) * 0.15
 
-    # 画一条竖线，表示音量变化的方向
-    stroke(120, 220, 255)
-    strokeWeight(3)
+    # 加一条上方波形线，表现声音连续流动
+    noFill()
+    stroke(120, 220, 255, 130)
+    strokeWeight(2)
+    beginShape()
+    waveAmp = 12 + volume * 85
+    waveDetail = 0.025 + treble * 0.04
+    for x in range(0, width, 12):
+        waveY = height * 0.18 + sin(x * waveDetail + frameCount * 0.12) * waveAmp
+        vertex(x, waveY)
+    endShape()
+
+    # 让辅助竖线颜色变淡，避免抢主体
+    stroke(90, 150, 190, 90)
+    strokeWeight(2)
     line(width / 2, height * 0.75, width / 2, y)
 
-    # 画三个简单柱子，分别表示低频、中频、高频
+    # 给三个柱子加一条统一底线
+    stroke(100, 180, 220, 120)
+    strokeWeight(2)
+    line(width / 2 - 145, height * 0.75, width / 2 + 145, height * 0.75)
+
+    # 把频谱柱改成立体柱：正面、右侧面和顶面
     noStroke()
-    fill(180, 80, 255)
-    rect(width / 2 - 120, height * 0.75 - bass * 160, 35, bass * 160)
-    fill(120, 180, 255)
-    rect(width / 2 - 18, height * 0.75 - mid * 160, 35, mid * 160)
-    fill(255, 120, 220)
-    rect(width / 2 + 85, height * 0.75 - treble * 160, 35, treble * 160)
+    drawColumn(width / 2 - 165, height * 0.75, 22, bass * 100 * bassWave1, 60, 140, 255)
+    drawColumn(width / 2 - 135, height * 0.75, 22, bass * 140 * bassWave2, 60, 140, 255)
+    drawColumn(width / 2 - 105, height * 0.75, 22, bass * 170 * bassWave3, 60, 140, 255)
+    drawColumn(width / 2 - 45, height * 0.75, 22, mid * 100 * midWave1, 80, 230, 220)
+    drawColumn(width / 2 - 15, height * 0.75, 22, mid * 140 * midWave2, 80, 230, 220)
+    drawColumn(width / 2 + 15, height * 0.75, 22, mid * 170 * midWave3, 80, 230, 220)
+    drawColumn(width / 2 + 75, height * 0.75, 22, treble * 100 * trebleWave1, 255, 90, 210)
+    drawColumn(width / 2 + 105, height * 0.75, 22, treble * 140 * trebleWave2, 255, 90, 210)
+    drawColumn(width / 2 + 135, height * 0.75, 22, treble * 170 * trebleWave3, 255, 90, 210)
+
+    # 给圆点加外圈，表现声音扩散感
+    noStroke()
+    fill(120 + volume * 100, 180 + volume * 50, 255, 60)
+    circle(width / 2, y, r * 2.2)
 
     # 让圆点颜色跟随总音量变化
     noStroke()
     fill(120 + volume * 135, 180 + volume * 60, 255)
     circle(width / 2, y, r)
+
+def drawColumn(x, baseY, w, h, r, g, b):
+    d = 8
+    topY = baseY - h
+
+    # 正面
+    fill(r, g, b)
+    rect(x, topY, w, h)
+
+    # 右侧面
+    fill(r * 0.65, g * 0.65, b * 0.65)
+    quad(x + w, baseY, x + w + d, baseY - d, x + w + d, topY - d, x + w, topY)
+
+    # 顶面
+    fill(min(r * 1.15, 255), min(g * 1.15, 255), min(b * 1.15, 255))
+    quad(x, topY, x + w, topY, x + w + d, topY - d, x + d, topY - d)
