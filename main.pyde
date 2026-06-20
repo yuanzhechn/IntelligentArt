@@ -73,6 +73,18 @@ def draw():
     strokeWeight(2)
     line(width / 2 - 145, height * 0.75, width / 2 + 145, height * 0.75)
 
+    # 加入透视地面横线，增强空间感
+    stroke(60, 120, 160, 70)
+    strokeWeight(1)
+    for i in range(5):
+        floorY = height * 0.75 + i * 26
+        line(width / 2 - 190 - i * 35, floorY, width / 2 + 190 + i * 35, floorY)
+
+    # 加入透视地面斜线，让柱子像站在舞台上
+    for i in range(7):
+        floorX = width / 2 - 210 + i * 70
+        line(width / 2, height * 0.75, floorX, height)
+
     # 把频谱柱改成立体柱：正面、右侧面和顶面
     noStroke()
     drawColumn(width / 2 - 165, height * 0.75, 22, bass * 100 * bassWave1, 60, 140, 255)
@@ -100,13 +112,13 @@ def drawColumn(x, baseY, w, h, r, g, b):
     topY = baseY - h
 
     # 正面
-    fill(r, g, b)
+    fill(min(r * 1.05, 255), min(g * 1.05, 255), min(b * 1.05, 255))
     rect(x, topY, w, h)
 
     # 右侧面
-    fill(r * 0.65, g * 0.65, b * 0.65)
+    fill(r * 0.45, g * 0.45, b * 0.45)
     quad(x + w, baseY, x + w + d, baseY - d, x + w + d, topY - d, x + w, topY)
 
     # 顶面
-    fill(min(r * 1.15, 255), min(g * 1.15, 255), min(b * 1.15, 255))
+    fill(min(r * 1.35, 255), min(g * 1.35, 255), min(b * 1.35, 255))
     quad(x, topY, x + w, topY, x + w + d, topY - d, x + d, topY - d)
