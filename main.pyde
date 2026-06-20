@@ -70,7 +70,7 @@ def draw():
 
     # 加入中心晶体，中频越强晶体越大
     crystalSize = 45 + mid * 80
-    drawCrystal(width / 2, height * 0.45, crystalSize)
+    drawCrystal(width / 2, height * 0.45, crystalSize, treble)
 
     # 给三个柱子加一条统一底线
     stroke(100, 180, 220, 120)
@@ -129,8 +129,21 @@ def drawColumn(x, baseY, w, h, r, g, b):
     quad(x, topY, x + w, topY, x + w + d, topY - d, x + d, topY - d)
 
 
-def drawCrystal(x, y, s):
+def drawCrystal(x, y, s, treble):
     noStroke()
+
+    # 加入环形光针，高频越强光针越长
+    for i in range(36):
+        angle = TWO_PI * i / 36 + frameCount * 0.01
+        r1 = s * 1.05
+        r2 = s * (1.35 + treble * 1.2)
+        x1 = x + cos(angle) * r1
+        y1 = y + sin(angle) * r1 * 0.45
+        x2 = x + cos(angle) * r2
+        y2 = y + sin(angle) * r2 * 0.45
+        stroke(120 + i * 3, 190, 255, 80)
+        strokeWeight(1)
+        line(x1, y1, x2, y2)
 
     # 给晶体加光环，形成声光核心
     noFill()
