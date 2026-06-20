@@ -28,7 +28,7 @@ def setup():
 def draw():
     # 深蓝黑
     noStroke()
-    fill(8, 12, 30, 45)
+    fill(7, 11, 28, 38)
     rect(0, 0, width, height)
 
     # 让星尘缓慢下落
@@ -62,13 +62,13 @@ def draw():
 
     # 加一条上方波形线，表现声音连续流动
     noFill()
-    stroke(120, 220, 255, 130)
+    stroke(110, 210, 255, 120)
     strokeWeight(2)
     beginShape()
     waveAmp = 12 + volume * 85
     waveDetail = 0.025 + treble * 0.04
     for x in range(0, width, 12):
-        waveY = height * 0.18 + sin(x * waveDetail + frameCount * 0.12) * waveAmp
+        waveY = height * 0.15 + sin(x * waveDetail + frameCount * 0.12) * waveAmp
         vertex(x, waveY)
     endShape()
 
@@ -79,16 +79,16 @@ def draw():
 
     # 加入中心晶体，中频越强晶体越大
     crystalSize = 45 + mid * 80
-    drawCrystal(width / 2, height * 0.45, crystalSize, treble)
+    drawCrystal(width / 2, height * 0.43, crystalSize, treble)
 
     # 给三个柱子加一条统一底线
-    stroke(100, 180, 220, 120)
+    stroke(90, 170, 220, 110)
     strokeWeight(2)
-    stageY = height * 0.82
+    stageY = height * 0.84
     line(width / 2 - 145, stageY, width / 2 + 145, stageY)
 
     # 加入透视地面横线，增强空间感
-    stroke(60, 120, 160, 70)
+    stroke(65, 135, 175, 58)
     strokeWeight(1)
     for i in range(5):
         floorY = stageY + i * 22
@@ -101,24 +101,24 @@ def draw():
 
     # 把频谱柱改成立体柱：正面、右侧面和顶面
     noStroke()
-    drawColumn(width / 2 - 165, stageY, 22, bass * 100 * bassWave1, 60, 140, 255)
-    drawColumn(width / 2 - 135, stageY, 22, bass * 140 * bassWave2, 60, 140, 255)
-    drawColumn(width / 2 - 105, stageY, 22, bass * 170 * bassWave3, 60, 140, 255)
-    drawColumn(width / 2 - 45, stageY, 22, mid * 100 * midWave1, 80, 230, 220)
-    drawColumn(width / 2 - 15, stageY, 22, mid * 140 * midWave2, 80, 230, 220)
-    drawColumn(width / 2 + 15, stageY, 22, mid * 170 * midWave3, 80, 230, 220)
-    drawColumn(width / 2 + 75, stageY, 22, treble * 100 * trebleWave1, 255, 90, 210)
-    drawColumn(width / 2 + 105, stageY, 22, treble * 140 * trebleWave2, 255, 90, 210)
-    drawColumn(width / 2 + 135, stageY, 22, treble * 170 * trebleWave3, 255, 90, 210)
+    drawColumn(width / 2 - 165, stageY, 22, bass * 100 * bassWave1, 70, 145, 255)
+    drawColumn(width / 2 - 135, stageY, 22, bass * 140 * bassWave2, 70, 145, 255)
+    drawColumn(width / 2 - 105, stageY, 22, bass * 170 * bassWave3, 70, 145, 255)
+    drawColumn(width / 2 - 45, stageY, 22, mid * 100 * midWave1, 80, 225, 230)
+    drawColumn(width / 2 - 15, stageY, 22, mid * 140 * midWave2, 80, 225, 230)
+    drawColumn(width / 2 + 15, stageY, 22, mid * 170 * midWave3, 80, 225, 230)
+    drawColumn(width / 2 + 75, stageY, 22, treble * 100 * trebleWave1, 245, 95, 225)
+    drawColumn(width / 2 + 105, stageY, 22, treble * 140 * trebleWave2, 245, 95, 225)
+    drawColumn(width / 2 + 135, stageY, 22, treble * 170 * trebleWave3, 245, 95, 225)
 
     # 给圆点加外圈，表现声音扩散感
     noStroke()
-    fill(120 + volume * 100, 180 + volume * 50, 255, 60)
+    fill(110 + volume * 90, 180 + volume * 45, 255, 50)
     circle(width / 2, y, r * 2.2)
 
     # 让圆点颜色跟随总音量变化
     noStroke()
-    fill(120 + volume * 135, 180 + volume * 60, 255)
+    fill(120 + volume * 120, 185 + volume * 55, 255)
     circle(width / 2, y, r)
 
 def drawColumn(x, baseY, w, h, r, g, b):
@@ -141,9 +141,9 @@ def drawColumn(x, baseY, w, h, r, g, b):
 def drawStars():
     global stars
     noStroke()
-    fill(180, 220, 255, 80)
+    fill(170, 215, 255, 62)
     for star in stars:
-        star[1] += 0.35
+        star[1] += 0.28
         if star[1] > height:
             star[0] = random(width)
             star[1] = 0
@@ -162,27 +162,27 @@ def drawCrystal(x, y, s, treble):
         y1 = y + sin(angle) * r1 * 0.45
         x2 = x + cos(angle) * r2
         y2 = y + sin(angle) * r2 * 0.45
-        stroke(120 + i * 3, 190, 255, 80)
+        stroke(115 + i * 3, 185, 255, 68)
         strokeWeight(1)
         line(x1, y1, x2, y2)
 
     # 给晶体加光环，形成声光核心
     noFill()
-    stroke(120, 220, 255, 90)
+    stroke(105, 210, 255, 78)
     strokeWeight(2)
     ellipse(x, y, s * 2.4, s * 0.9)
-    stroke(255, 120, 220, 70)
+    stroke(245, 110, 225, 62)
     ellipse(x, y, s * 1.8, s * 0.6)
 
     # 中心菱形
     noStroke()
-    fill(120, 210, 255, 180)
+    fill(115, 205, 255, 172)
     quad(x, y - s, x + s * 0.7, y, x, y + s, x - s * 0.7, y)
 
     # 左侧暗面
-    fill(55, 110, 170, 150)
+    fill(45, 100, 165, 145)
     quad(x, y - s, x, y + s, x - s * 0.7, y, x - s * 0.25, y)
 
     # 右侧暗面
-    fill(80, 150, 220, 140)
+    fill(75, 145, 220, 135)
     quad(x, y - s, x + s * 0.7, y, x, y + s, x + s * 0.25, y)
