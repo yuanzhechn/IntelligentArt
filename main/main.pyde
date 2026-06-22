@@ -1,5 +1,5 @@
 # 使用 Java 自带的音频接口播放 WAV，不需要额外安装 Processing 音频库
-from java.io import File
+from java.io import ByteArrayInputStream
 from javax.sound.sampled import AudioSystem, Clip
 
 
@@ -20,18 +20,26 @@ def setup():
     # 读取音乐分析后的数据文件
     # 读取每一行的前4列：总音量、低频、中频、高频
     rows = loadStrings("music_features.csv")
+    if rows is None:
+        rows = []
+        print("找不到 data/music_features.csv，画面将使用零值运行")
     for row in rows:
         parts = row.split(",")
         if len(parts) >= 4:
             features.append([float(parts[0]), float(parts[1]), float(parts[2]), float(parts[3])])
 
-    # 加载并循环播放 data/music.wav
+    # 先由 Processing 读取音频，再从内存播放，避免旧版 Java 无法识别中文路径
     try:
-        audioInput = AudioSystem.getAudioInputStream(File(dataPath("music.wav")))
+        musicBytes = loadBytes("music.wav")
+        if musicBytes is None:
+            raise Exception("找不到 data/music.wav")
+        audioInput = AudioSystem.getAudioInputStream(ByteArrayInputStream(musicBytes))
         musicPlayer = AudioSystem.getClip()
         musicPlayer.open(audioInput)
         audioInput.close()
         musicPlayer.loop(Clip.LOOP_CONTINUOUSLY)
+        musicPlayer.start()
+        print("music.wav 已开始播放")
     except Exception as error:
         musicPlayer = None
         print("无法播放 music.wav: " + str(error))
