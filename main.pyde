@@ -1,10 +1,16 @@
+# 使用 Java 自带的音频接口播放 WAV，不需要额外安装 Processing 音频库
+from java.io import File
+from javax.sound.sampled import AudioSystem, Clip
+
+
 # 保存从 music_features.csv 中读取到的音乐数据
 features = []
 stars = []
+musicPlayer = None
 
 
 def setup():
-    global features, stars
+    global features, stars, musicPlayer
     # 设置画布大小和帧率
     size(960, 640)
     frameRate(30)
@@ -18,6 +24,17 @@ def setup():
         parts = row.split(",")
         if len(parts) >= 4:
             features.append([float(parts[0]), float(parts[1]), float(parts[2]), float(parts[3])])
+
+    # 加载并循环播放 data/music.wav
+    try:
+        audioInput = AudioSystem.getAudioInputStream(File(dataPath("music.wav")))
+        musicPlayer = AudioSystem.getClip()
+        musicPlayer.open(audioInput)
+        audioInput.close()
+        musicPlayer.loop(Clip.LOOP_CONTINUOUSLY)
+    except Exception as error:
+        musicPlayer = None
+        print("无法播放 music.wav: " + str(error))
 
     # 加入少量星尘，作为星河背景
     stars = []
@@ -41,7 +58,12 @@ def draw():
         mid = 0.0
         treble = 0.0
     else:
-        data = features[frameCount % len(features)]
+        # 以音乐播放时间选择 CSV 数据，避免掉帧造成音画不同步
+        if musicPlayer is not None and musicPlayer.isOpen():
+            featureIndex = int(musicPlayer.getMicrosecondPosition() * 30 / 1000000.0)
+        else:
+            featureIndex = frameCount
+        data = features[featureIndex % len(features)]
         volume = data[0]
         bass = data[1]
         mid = data[2]
